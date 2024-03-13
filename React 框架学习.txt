@@ -1,0 +1,58 @@
+输入 npx create-react-app frontend 会生成一个React默认的小程序。
+他是React设置的官方文档，有React Logo，旋转动画和学习网站的链接。
+这些都不要 全部删光。
+public 文件夹只保留 index.html
+scr 文件夹只保留App.js, index.js
+
+【详细解释】
+1) index.html 
+React程序使用的网页，也是React程序的入口点。
+设置网页的标题、内容、布局、属性等。
+2) index.js
+React程序的入口点，根据id为root的这个div，
+插入React框架（虚拟DOM树的根）
+3）App.js
+React框架，使用的第一个在网页展示的Component。
+
+index.html 删除其他无用元素，保留一下内容：
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>
+
+
+1) HTML 标签（<!DOCTYPE html>）
+告诉浏览器该文档是 HTML5 文档。这个声明必须是 HTML 文档的第一行，位于 <html> 标签之前。它是区分 HTML5 和早期 HTML 版本（如 HTML 4.01 或 XHTML）的关键，确保浏览器正确地按照 HTML5 标准解析文档。
+
+2) 文档主要语言(lang)
+ HTML 文档的根元素，包含了整个页面的内容。lang="en" 属性指定了文档的主要语言是英语。
+
+3）字符集 (charset="utf-8")
+UTF-8 是浏览器解析网页中的字符的字符编码，确保了文本内容在各种语言下都能的正确显示。
+
+4) 视口（viewport）：
+用于控制网页在移动设备上的布局。
+A） 将页面宽度设置为跟随设备的屏幕宽度变化，
+B） 初始缩放比例为 1，网页以其本来的大小显示。
+
+5) 主题颜色（theme-color）
+移动设备上，浏览器顶部状态栏的颜色。`#000000` 表示颜色为黑色。
+
+6) 描述（description）
+ 提供了网站的简短描述，概述网站的内容和功能，帮助提高在搜索引擎结果中的排名和吸引潜在访客的点击。
+
+7）<noscript> 
+当浏览器禁用 JavaScript时，向用户显示一条消息，告诉他们需要启用 JavaScript 才能运行该应用。
