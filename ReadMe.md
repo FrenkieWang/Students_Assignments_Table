@@ -1,6 +1,5 @@
 # Tabular Content
 
-## Table Requirements
 HTML/css/js application
 
 
