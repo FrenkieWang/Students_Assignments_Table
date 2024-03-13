@@ -1,0 +1,39 @@
+
+table {
+    font-family: sans-serif;
+    border-collapse: collapse; /* 合并相邻的边框 */
+    border: 2px solid black; /* 设置边框为黑色实线，宽度为 2px */
+}  
+
+th, td {
+    border: 2px solid black; /* 同样设置边框为黑色实线，宽度为 2px */
+}
+
+tr {
+    text-align: center;
+}
+  
+/* 表头样式 */
+th {
+    background-color: darkgray   ; /* 深灰色背景 */
+}
+  
+/* 表格行样式 */
+tr:nth-child(even) {
+    background-color: whitesmoke; /* 偶数行黄色 */
+}
+
+tr:nth-child(odd) {
+    background-color: gainsboro ; /* 奇数行绿色 */
+}
+
+    
+/* 左对齐样式 */
+.left-align {
+    text-align: left;
+}
+  
+/* 右对齐样式 */
+.right-align {
+    text-align: right;
+}  
