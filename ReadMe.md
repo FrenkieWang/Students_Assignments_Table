@@ -27,15 +27,18 @@ HTML/css/js application
     Average: **right-aligned**    
 
 6.  Only Assigment:  **content enditable**
+
         a) not submitted: Default Value [-] center-aligned -> Yellow BackGround-Color
         b) submitted: 0 - 100 Integer right-aligned -> alternating Row BackGround-Color
         c) Not submit Integer 0-100: converts to Default Value [-]
 
 7.  *[Extra]* Click Student Name -> Highlight complete table data row
+
         Click Student Name again -> Disselect the Row
         Not allowed to Click Table Title Row!
 
 8.  *[Extra]* Click Assignment Column Title -> Highlight complete Assignment Grade Column
+
         Click Assignment Colum Title -> Disselect the Column
         Not allowed to Select Student Name and Student ID
 
