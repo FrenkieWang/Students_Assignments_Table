@@ -18,7 +18,6 @@ HTML/CSS/JS application
 
 3.  All data in Table:   **sans-serif** Font
 
-
 4.  Heading: **center-aligned**
 
     Name and ID: **left-aligned**

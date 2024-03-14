@@ -7,6 +7,7 @@
 
 table {
     border-collapse: collapse; 
+    font-family: sans-serif; /* All	data presentation in table */
 }
 
 th, td {
@@ -37,4 +38,27 @@ tr:nth-child(odd) {
 
 .text-right {
     text-align: right; 
+}
+
+
+.selected-row, .selected-column {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.selected-row{
+    border: 5px solid aqua;
+}
+
+.selected-column {
+    border-left: 5px solid orangered;
+    border-right: 5px solid orangered;
+}
+
+.selected-column-top {
+    border-top: 5px solid orangered;
+}
+
+.selected-column-bottom {
+    border-bottom: 5px solid orangered;
 }
