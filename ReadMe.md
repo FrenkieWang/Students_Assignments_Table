@@ -43,7 +43,7 @@ HTML/CSS/JS application
 
 
 ### STEP 2:   Calculate the Average Score [JS]
-1.  Create a function to Generate **random Name** and **ramdom ID** for 10 students.
+1.  Create a function to generate **random Name** and **ramdom ID** for 10 students.
 
 2.  Average Score: **Rounded Integer 0 - 100**, without decimal places. 
 
@@ -114,6 +114,8 @@ HTML/CSS/JS application
 7.  Create a button to retrieve previously saved Table information in **Procedure 6**
     
 ### STEP 4:   Pay Attention when Insert/Delete[JS]
+1.  Generate **random Name** and **ramdom ID** for every inserted Rows.
+
 1.  Update **Count of Unsubmitted** Assignments.
 
 2.  Update the **Average Score** of Each Student.
