@@ -12,11 +12,11 @@ HTML/css/js application
 
     The table row contain **10 hypothetical students**.
 
-2.  Headings: **Dark Grey** BackGround-Color
+2.  Headings:   **Dark Grey** BackGround-Color
 
-    Cells: **Alternating light-grey** BackGround-Color, **black** Text Color
+    Cells:   **Alternating light-grey** BackGround-Color, **black** Text Color
 
-3.  All data in Table: "**sans-serif**" Font
+3.  All data in Table:   **sans-serif** Font
 
 4.  Create a function to Generate **random Name** and **ramdom ID** for 10 students
 
@@ -104,9 +104,9 @@ HTML/css/js application
 
     [Format]  **`Assignment (count+1)`**
 
-    For example, if there is Assignment 1, Assignment 2, ... Assignment 5 in the table before,
+    For example, if there is `Assignment 1, Assignment 2, ... Assignment 5` in the table before,
 
-    the title name of new inserted Column should be "Assignment 6"!
+    the title name of new inserted Column should be `Assignment 6`!
 
 6.  Create a button to save all information of the current Table.
 
@@ -117,4 +117,4 @@ HTML/css/js application
 
 2.  Update the **Average Score** of Each Student.
 
-3.  Copy the **JavaScript function** in STEP 2 and STEP 3 of **default Row/Column**.    
+3.  Copy the **JavaScript function** in **STEP 2** and **STEP 3** of **default Row/Column**.    
