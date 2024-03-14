@@ -1,6 +1,6 @@
 # Tabular Content
 
-HTML/css/js application
+HTML/CSS/JS application
 
 
 ### STEP 1:   Create Table Layout [CSS]
