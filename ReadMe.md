@@ -27,7 +27,7 @@ HTML/CSS/JS application
 
 5.  Only Assigment:  **content-editable**
 
-        a) Not submitted ~Default Value [-]:  center-aligned -> Yellow BackGround-Color
+        a) Not submitted ~ Default Value [-]: center-aligned -> Yellow BackGround-Color
         b) Submitted Integer 0-100 : right-aligned -> alternating Row BackGround-Color
         c) Submitted invalid content: converts to Default Value [-]
 
