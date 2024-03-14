@@ -27,9 +27,9 @@ HTML/CSS/JS application
 
 5.  Only Assigment:  **content-editable**
 
-        a) not submitted: Default Value [-] center-aligned -> Yellow BackGround-Color
-        b) submitted Integer 0-100 : right-aligned -> alternating Row BackGround-Color
-        c) Not Valid submit: converts to Default Value [-]
+        a) Not submitted: Default Value [-] center-aligned -> Yellow BackGround-Color
+        b) Submitted Integer 0-100 : right-aligned -> alternating Row BackGround-Color
+        c) Submitted invalid content: converts to Default Value [-]
 
 6.  *[Extra]* Click Student Name -> Highlight complete table data row
 
