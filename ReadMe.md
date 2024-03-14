@@ -25,7 +25,7 @@ HTML/CSS/JS application
 
     Average: **right-aligned**    
 
-5.  Only Assigment:  **content enditable**
+5.  Only Assigment:  **content-editable**
 
         a) not submitted: Default Value [-] center-aligned -> Yellow BackGround-Color
         b) submitted: 0 - 100 Integer right-aligned -> alternating Row BackGround-Color
