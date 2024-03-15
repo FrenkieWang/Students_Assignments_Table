@@ -66,7 +66,11 @@ HTML/CSS/JS application
         a) (Default) Average[%] - Percentage Grade - **93-100**
         b) Arerage[Letter] - Letter Grade - **A**
         c) Average[4.0] - 4.0 Scale - **4.0**
-    **When the assignment cell is updated, the average Score should be updated to the current format as well!**
+
+    **When the Assignment cell is changed/deleted/validated/invalidated,**     
+
+
+    **the average Score should be updated to the current Format as well!**
  
 
 ### STEP 3:   Insert/Delete/Undelete the Row/Column 
