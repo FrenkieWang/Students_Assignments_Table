@@ -62,3 +62,8 @@ tr:nth-child(odd) {
 .selected-column-bottom {
     border-bottom: 5px solid orangered;
 }
+
+.average-failed {
+    background-color: red;
+    color: white;
+}

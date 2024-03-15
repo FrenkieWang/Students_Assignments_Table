@@ -3,10 +3,10 @@
 HTML/CSS/JS application
 
 
-### STEP 1:   Create Table Layout [CSS]
+### STEP 1:   Create Table Layout 
 1.  Create a table with 11 rows and 8 column.
 
-    The headings of columbn includes:  
+    The headings of column includes:  
     
     **Student Name, Student ID, Assignment 1, Assignment 2,...., Assignment 5, Average(%)**
 
@@ -18,33 +18,33 @@ HTML/CSS/JS application
 
 3.  All data in Table:   **sans-serif** Font
 
-4.  Heading: **center-aligned**
+4.  Create a function to generate **random Name** and **ramdom ID** for 10 students.
+
+5.  Heading: **center-aligned**
 
     Name and ID: **left-aligned**
 
     Average: **right-aligned**    
 
-5.  Only Assigment:  **content-editable**
+6.  Only Assigment:  **content-editable**
 
         a) Not submitted ~ Default Value [-]: center-aligned -> Yellow BackGround-Color
         b) Submitted Integer 0-100 : right-aligned -> Alternating Row BackGround-Color
         c) Submitted invalid content: Converts to Default Value [-]
 
-6.  *[Extra]* Click Student Name -> Highlight complete table data row
+7.  *[Extra]* Click Student Name -> Highlight complete table data row
 
         Click Student Name again -> Disselect the Row
         Not allowed to Click Table Title Row!
 
-7.  *[Extra]* Click Assignment Column Title -> Highlight complete Assignment Grade Column
+8.  *[Extra]* Click Assignment Column Title -> Highlight complete Assignment Grade Column
 
         Click Assignment Colum Title -> Disselect the Column
         Not allowed to Select Student Name and Student ID
 
 
 ### STEP 2:   Calculate the Average Score [JS]
-1.  Create a function to generate **random Name** and **ramdom ID** for 10 students.
-
-2.  Average Score: **Rounded Integer 0 - 100**, without decimal places. 
+1.  Average Score: **Rounded Integer 0 - 100**, without decimal places. 
 
         Default Value -> **-**
 
@@ -53,21 +53,13 @@ HTML/CSS/JS application
         a) Input an Assignment Score.
         b) Delete an Assignment Column which has valid Score.
 
-3.  Change CSS of the Average Score:
+2.  Change CSS of the Average Score:
 
         Default Value: Black Color and alternating Row BackGround-Color.
         0 ≤ Score ≤ 59: White Color and Red BackGround-Color.
         60 ≤ Score ≤ 100: Black Color and alternating Row BackGround-Color.
 
-4.  Set a Div under the Table - [**Count of Unsubmitted** Assignments].
-
-    Calculate the total value automatically when:
-
-        a) Input an Assignment Score
-        b) A valid Assignment Score becomes invalid
-        c) Insert/Delete a Row/Column  
-
-5.  Click the Column of **Average** —> Toggle the presentation of Average Grade
+3.  Click the Column of **Average** —> Toggle the presentation of Average Grade
 
     Sequence: a -> b -> c -> a -> b -> c -> ..............
 
@@ -76,7 +68,7 @@ HTML/CSS/JS application
         c) Average[4.0] - 4.0 Scale - **4.0**
  
 
-### STEP 3:   Insert/Delete the Row/Column [JS]
+### STEP 3:   Insert/Delete/Undelete the Row/Column 
 **Row** - Student Information
 
 **Column** - Assignment Score
@@ -112,11 +104,24 @@ HTML/CSS/JS application
         
         Undelect a selected Column -> Update Final Grade Average
 
-7.  Create a button to save all information of the current Table.
 
-8.  Create a button to retrieve previously saved Table information in **Procedure 7**
-    
-### STEP 4:   Pay Attention when Insert/Delete[JS]
+### STEP 4:   Save and Retrieve Table Information
+
+1.  Create a button to save all information of the current Table.
+
+2.  Create a button to retrieve previously saved Table information in **Procedure 7**
+
+3.  Set a Div under the Table - [**Count of Unsubmitted** Assignments].
+
+    Calculate the total value automatically when:
+
+        a) Input an Assignment Score.
+        b) A valid Assignment Score becomes invalid.
+        c) Insert/Delete/Restore a Row/Column .
+        d) Retrieve previous saved table information.
+
+
+### STEP 5:   Pay Attention when Insert/Delete/Undelete/Retrieve
 1.  Generate **random Name** and **ramdom ID** for every inserted **Rows**.
 
 2.  Update **Count of Unsubmitted** Assignments.

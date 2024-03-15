@@ -149,9 +149,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const avg = Math.round(sum / count);
             avgCell.textContent = avg;
             avgCell.className = 'text-right';
+
+            // [Ternary operator] - add/remove 'average-failed' class
+            avg < 60 ? avgCell.classList.add('average-failed') : avgCell.classList.remove('average-failed');
+        // No assignments are validated.
         } else {
             avgCell.textContent = '-';
             avgCell.className = 'text-right';
+            avgCell.classList.remove('average-failed');
         }
     }
 
