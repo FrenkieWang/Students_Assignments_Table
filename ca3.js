@@ -83,6 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // PART 4 - Function: Validate Assignment cells and set their CSS.
     function validateAndStyleCell(cell) {
+        // The parent of a Cell is its Row
+        const row = cell.parentElement;
 
         // Check whether Cell value is Integer 0 - 100
         const validateCell = () => {
@@ -97,6 +99,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 cell.style.backgroundColor = '';
                 cell.className = 'text-right';
             }
+            // Update the average whenever a cell is validated
+            updateAverageForRow(row); 
         };
 
         // Finish input by 'keydown' and 'blur'
@@ -124,7 +128,35 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // PART 4 - function:  clear all selected Rows/Columns
+    // PART 4 - Function to update the average for a row
+    function updateAverageForRow(row) {
+        let sum = 0;
+        let count = 0;
+        const cells = row.querySelectorAll('td');
+        cells.forEach((cell, index) => {
+            // Only consider cells that correspond to assignments (excluding name, ID, and average cells)
+            if (index > 1 && index < cells.length - 1) {
+                const value = cell.textContent.trim();
+                if (value !== '-' && !isNaN(value)) {
+                    sum += parseInt(value);
+                    count++;
+                }
+            }
+        });
+        // The last cell is the average cell
+        const avgCell = cells[cells.length - 1]; 
+        if (count > 0) {
+            const avg = Math.round(sum / count);
+            avgCell.textContent = avg;
+            avgCell.className = 'text-right';
+        } else {
+            avgCell.textContent = '-';
+            avgCell.className = 'text-right';
+        }
+    }
+
+
+    // PART 5 - function:  clear all selected Rows/Columns
     function clearSelection() {
         document.querySelectorAll('.selected-row, .selected-column, .selected-column-top, .selected-column-bottom')
         .forEach(el => {
