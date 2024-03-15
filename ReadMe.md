@@ -81,24 +81,14 @@ HTML/CSS/JS application
 
 **Column** - Assignment Score
 
-1.  *[Extra]* Make a button to Delete Row/Column
+1.  Make a button to insert a new Row after the last row of the table.
 
-        Delete a selected Row
-        Delect a selected Column -> Update Final Grade Average
-
-2.  *[Extra]* Make a button to undelete the last deleted Row/Column
-
-        Once clicked, button disabled!
-        Until another Row/Column is deleted, button can be clicked again.
-
-3.  Make a button to insert a new Row after the last row of the table.
-
-4.  *[Extra]* Right Click on any cell in a Row -> Show an Menu with 2 options
+2.  *[Extra]* Right Click on any cell in a Row -> Show an Menu with 2 options
 
         a) Insert a row above
         b) Insert a row below
 
-5.  Make a button to insert a new Column at the **one column left of Average[%] Column**.
+3.  Make a button to insert a new Column at the **one column left of Average[%] Column**.
 
     The title name is determined by the number of previous Assignments.
 
@@ -108,15 +98,29 @@ HTML/CSS/JS application
 
     the title name of new inserted Column should be `Assignment 6`!
 
-6.  Create a button to save all information of the current Table.
+4.  *[Extra]* Make a button to Delete Selected Row
 
-7.  Create a button to retrieve previously saved Table information in **Procedure 6**
+5.  *[Extra]* Make a button to Delete Selected Column
+
+Remember to update Final Grade Average
+
+6.  *[Extra]* Make a button to undelete the last deleted Row/Column
+
+        Once clicked, button disabled!
+
+        Until another Row/Column is deleted, button can be clicked again.
+        
+        Undelect a selected Column -> Update Final Grade Average
+
+7.  Create a button to save all information of the current Table.
+
+8.  Create a button to retrieve previously saved Table information in **Procedure 6**
     
 ### STEP 4:   Pay Attention when Insert/Delete[JS]
-1.  Generate **random Name** and **ramdom ID** for every inserted Rows.
+1.  Generate **random Name** and **ramdom ID** for every inserted **Rows**.
 
-1.  Update **Count of Unsubmitted** Assignments.
+2.  Update **Count of Unsubmitted** Assignments.
 
-2.  Update the **Average Score** of Each Student.
+3.  Update the **Average Score** of Each Student when delete **Columns**.
 
-3.  Copy the **JavaScript function** in **STEP 2** and **STEP 3** of **default Row/Column**.    
+4.  Add **Select** function in each inserted **Columns**.
