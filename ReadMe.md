@@ -102,7 +102,7 @@ HTML/CSS/JS application
 
 5.  *[Extra]* Make a button to Delete Selected Column
 
-Remember to update Final Grade Average
+        Remember to update Final Grade Average
 
 6.  *[Extra]* Make a button to undelete the last deleted Row/Column
 
@@ -114,7 +114,7 @@ Remember to update Final Grade Average
 
 7.  Create a button to save all information of the current Table.
 
-8.  Create a button to retrieve previously saved Table information in **Procedure 6**
+8.  Create a button to retrieve previously saved Table information in **Procedure 7**
     
 ### STEP 4:   Pay Attention when Insert/Delete[JS]
 1.  Generate **random Name** and **ramdom ID** for every inserted **Rows**.
