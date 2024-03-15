@@ -69,7 +69,6 @@ HTML/CSS/JS application
 
     **When the Assignment cell is changed/deleted/validated/invalidated,**     
 
-
     **the average Score should be updated to the current Format as well!**
  
 
