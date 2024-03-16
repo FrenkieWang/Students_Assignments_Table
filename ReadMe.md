@@ -84,6 +84,11 @@ HTML/CSS/JS application
         a) Insert a row above
         b) Insert a row below
 
+     The **inserted new Row** should have the **same function** as previous Rows:
+
+        a) Left Click Student Name -> Select the Row
+        b) Right Click any place in Row -> Call the Contect Menu
+
 3.  Make a button to insert a new Column at the **one column left of Average[%] Column**.
 
     The title name is determined by the number of previous Assignments.
@@ -107,6 +112,13 @@ HTML/CSS/JS application
         Until another Row/Column is deleted, button can be clicked again.
         
         Undelect a selected Column -> Update Final Grade Average
+
+     When undelete a column, pay attention to restore these functions:
+
+        a) Click the "Assginment X" Title -> Select the Column
+        b) Validate Cells
+        c) Update Average Score
+
 
 
 ### STEP 4:   Save and Retrieve Table Information

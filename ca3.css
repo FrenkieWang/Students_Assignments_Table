@@ -67,3 +67,23 @@ tr:nth-child(odd) {
     background-color: red;
     color: white;
 }
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+
+    /* Make element fixed in the brower window */
+    position: fixed; 
+    /* At the buttom, same as browser window lenght */
+    bottom: 0; 
+    left: 0; 
+    width: 100%; 
+
+    background-color: whitesmoke; 
+}
+
+.button-container button {
+    margin: 0 10px; 
+}
