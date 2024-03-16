@@ -113,10 +113,10 @@ HTML/CSS/JS application
         
         Undelect a selected Column -> Update Final Grade Average
 
-     When undelete a column, pay attention to restore these functions:
+     Pay attention to restore these functions:
 
         a) Click the "Assginment X" Title -> Select the Column
-        b) Validate Cells
+        b) Validate Cells - Value + CSS
         c) Update Average Score
 
 

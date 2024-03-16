@@ -501,28 +501,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Part 18 - Undelete Functionality
     document.getElementById('undeleteBtn').addEventListener('click', function() {
+        // Case 1: Recover the Row
         if (deletedRow) {
             const refRow = tbody.rows[deletedRow.index] || tbody.appendChild(document.createElement('tr'));
             tbody.insertBefore(deletedRow.element, refRow);
+
+            // 为“Student Name”单元格重新绑定点击事件监听器
+            const nameCell = deletedRow.element.cells[0];
+            nameCell.style.cursor = 'pointer'; 
+            nameCell.addEventListener('click', handleSelectRow);
+
+            // 为assignment单元格重新绑定验证和样式调整逻辑
+            for (let i = 2; i < deletedRow.element.cells.length - 1; i++) {
+                validateAndStyleCell(deletedRow.element.cells[i]);
+            }
+
             deletedRow = null; // 清除存储的被删除行，防止重复恢复
         }
 
+        // Case 2: Recover the Column
         if (deletedColumn.index !== null) {
+            // Recover TBody of the Column
             Array.from(tbody.rows).forEach((row, i) => {
                 const refCell = row.cells[deletedColumn.index] || row.appendChild(document.createElement('td'));
                 row.insertBefore(deletedColumn.cells[i], refCell);
-                validateAndStyleCell(deletedColumn.cells[i]);
+                validateAndStyleCell(deletedColumn.cells[i]); // CSS and JS of that cell
             });
 
+            // Recover THead of the Column
             const headerCell = document.createElement('th');
             headerCell.textContent = deletedColumn.header;
             headerCell.className = deletedColumn.classes; // 重新应用保存的类
             headerCell.addEventListener('click', handleSelectColumn); // 重新绑定点击事件监听器
             headerCell.style.cursor = 'pointer';
-
             thead.rows[0].insertBefore(headerCell, thead.rows[0].cells[deletedColumn.index]);
 
-            // 遍历所有行，更新平均分
+            // Update the Average Score after Undelete!
             Array.from(tbody.rows).forEach(row => {
                 updateAverageForRow(row);
             });
@@ -530,7 +544,7 @@ document.addEventListener('DOMContentLoaded', function() {
             deletedColumn = {index: null, cells: []}; // 清除存储的被删除列，防止重复恢复
         }
 
-        // 恢复内容后禁用Undelete按钮
+        // "Disable Undelete" Button after Clicked
         document.getElementById('undeleteBtn').disabled = true;
     });
 });
