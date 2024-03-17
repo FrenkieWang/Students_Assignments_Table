@@ -1,5 +1,15 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/$1" }
+    "version" : 2,
+    "builds" : [
+        {
+            "src" : "ca3.html",
+            "use" : "@vercel/node"
+        }
+    ],
+    "routes" : [
+        {
+            "src" : "/(.*)",
+            "dest" : "ca3.html"
+        }
     ]
-  }
+}
