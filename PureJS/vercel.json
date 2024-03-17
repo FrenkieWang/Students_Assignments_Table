@@ -1,20 +1,6 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "ca3.html",
-        "use": "@vercel/static"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/",
-        "dest": "/ca3.html"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/$1"
-      }
-    ]
-  }
-  
+  "version": 2,
+  "routes": [
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}
