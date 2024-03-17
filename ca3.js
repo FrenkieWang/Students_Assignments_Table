@@ -74,10 +74,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const averageHeader = newHeaderRow.querySelector('th:last-child'); 
         averageHeader.style.cursor = 'pointer';
         averageHeader.addEventListener('click', () => toggleAverageFormat(averageGradeFormat));
+        bindColumnSelectListeners();
     }
     // Initialize the Table when Page loads
     createInitialTable();
-    bindColumnSelectListeners();
  
 
     // PART 2 - Function: Validate Assignment cells and set their CSS.
