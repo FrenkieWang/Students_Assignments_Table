@@ -12,20 +12,24 @@
 <body>
     <div class="App">
         <h2>Student Assignment Table</h2> 
+        <div class="button-container">
+            <button id="addStudentBtn">Add Student Row</button>
+            <button id="addAssignmentBtn">Add Assignment Column</button>
+        </div>
+        <div class="button-container">
+            <button id="deleteRowBtn">Delete Selected Row</button>
+            <button id="deleteColumnBtn">Delete Selected Column</button>
+            <button id="undeleteBtn">Undelete Row/Column</button>
+        </div>
+        <div class="button-container">
+            <button id="saveBtn">Save the Table</button>
+            <button id="retrieveBtn">Retrieve saved Table</button>
+            <button id="initialBtn">Initialize the Table</button>
+        </div>
         <table>
             <thead></thead> 
             <tbody></tbody> 
         </table>
-        <div class="button-container">
-            <button id="deleteRowBtn">Delete Selected Row</button>
-            <button id="deleteColumnBtn">Delete Selected Column</button>
-            <button id="addStudentBtn">Add Student Row</button>
-            <button id="addAssignmentBtn">Add Assignment Column</button>
-            <button id="undeleteBtn">Undelete</button>
-            <button id="saveBtn">Save</button>
-            <button id="retrieveBtn">Retrieve</button>
-            <button id="initialBtn">Initialize</button>
-        </div>
         <h3>Unsubmitted Assignment: <span id = "CANum">0</span></h3>
     </div>
 </body>
