@@ -12,13 +12,15 @@ HTML/CSS/JS application
 
     The table row contain **10 hypothetical students**.
 
-2.  Headings:   **Dark Grey** BackGround-Color
+2.  Create a function to generate **random Name** and **ramdom ID** for students.
+
+    The Student name and ID of the first initialized 10 students should be saved.
+
+3.  Headings:   **Dark Grey** BackGround-Color
 
     Cells:   **Alternating light-grey** BackGround-Color, **black** Text Color
 
-3.  All data in Table:   **sans-serif** Font
-
-4.  Create a function to generate **random Name** and **ramdom ID** for 10 students.
+4.  All data in Table:   **sans-serif** Font.
 
 5.  Heading: **center-aligned**
 
@@ -46,12 +48,14 @@ HTML/CSS/JS application
 ### STEP 2:   Calculate the Average Score [JS]
 1.  Average Score: **Rounded Integer 0 - 100**, without decimal places. 
 
-        Default Value -> **-**
+        Default Value -> **/**
 
     Update Average Score when:
 
         a) Input an Assignment Score.
         b) Delete an Assignment Column which has valid Score.
+        c) Undelete an Assignment Column which has valid Score.
+        d) Retrieve the Table saved before.
 
 2.  Change CSS of the Average Score:
 
@@ -67,7 +71,7 @@ HTML/CSS/JS application
         b) Arerage[Letter] - Letter Grade - **A**
         c) Average[4.0] - 4.0 Scale - **4.0**
 
-    **When the Assignment cell is changed/deleted/validated/invalidated,**     
+    **When the Assignment cell is changed/deleted/validated/invalidated/retrieved**     
 
     **the average Score should be updated to the current Format as well!**
  
@@ -77,7 +81,7 @@ HTML/CSS/JS application
 
 **Column** - Assignment Score
 
-1.  Make a button to insert a new Row after the last row of the table.
+1.  Make a button to insert a new Row at the buttom of the table(**below last Row**). 
 
 2.  *[Extra]* Right Click on any cell in a Row -> Show an Menu with 2 options
 
@@ -89,7 +93,7 @@ HTML/CSS/JS application
         a) Left Click Student Name -> Select the Row
         b) Right Click any place in Row -> Call the Contect Menu
 
-3.  Make a button to insert a new Column at the **one column left of Average[%] Column**.
+3.  Make a button to insert a new Column at **one column left of Average[%] Column**.
 
     The title name is determined by the number of previous Assignments.
 
@@ -99,13 +103,13 @@ HTML/CSS/JS application
 
     the title name of new inserted Column should be `Assignment 6`!
 
-4.  *[Extra]* Make a button to Delete Selected Row
+4.  *[Extra]* Make a button to **Delete Selected Row**.
 
-5.  *[Extra]* Make a button to Delete Selected Column
+5.  *[Extra]* Make a button to **Delete Selected Column**.
 
         Remember to update Final Grade Average
 
-6.  *[Extra]* Make a button to undelete the last deleted Row/Column
+6.  *[Extra]* Make a button to **undelete the last deleted Row/Column**.
 
         Once clicked, button disabled!
 
@@ -123,9 +127,9 @@ HTML/CSS/JS application
 
 ### STEP 4:   Save and Retrieve Table Information
 
-1.  Create a button to save all information of the current Table.
+1.  Create a button to **save all information of the current Table**.
 
-2.  Create a button to retrieve previously saved Table information in **Procedure 7**
+2.  Create a button to **retrieve previously saved Table information.**
 
 3.  Set a Div under the Table - [**Count of Unsubmitted** Assignments].
 
@@ -133,7 +137,7 @@ HTML/CSS/JS application
 
         a) Input an Assignment Score.
         b) A valid Assignment Score becomes invalid.
-        c) Insert/Delete/Restore a Row/Column .
+        c) Insert/Delete/Undelete/ a Row/Column.
         d) Retrieve previous saved table information.
 
 
@@ -142,6 +146,8 @@ HTML/CSS/JS application
 
 2.  Update **Count of Unsubmitted** Assignments.
 
-3.  Update the **Average Score** of Each Student when delete **Columns**.
+3.  Update the **Average Score** of Each Student when delete **Columns**, including toggle function.
 
-4.  Add **Select** function in each inserted **Columns**.
+4.  Add **Select** function in each inserted **Assginment Column**.
+
+5.  Add **Select** function in each inserted **Student Row**.
