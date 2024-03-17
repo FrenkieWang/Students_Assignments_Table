@@ -3,64 +3,85 @@ document.addEventListener('DOMContentLoaded', function() {
     const thead = table.querySelector('thead');
     const tbody = table.querySelector('tbody');
 
-    let gradeFormat = 'Average[%]'; // Default to Percent Grade
+    var averageGradeFormat = 'Average[%]'; // Default to Percent Grade
+    const headers = ["Student Name", "Student ID", "Assignment 1", "Assignment 2", 
+    "Assignment 3", "Assignment 4", "Assignment 5", averageGradeFormat];
 
-    // 用于存储最近被删除的行和列
-    let deletedRow = null;
-    let deletedColumn = {index: null, cells: []};
+    //  Store recently deleted rows and columns
+    var deletedRow = null;
+    var deletedColumn = {index: null, cells: []}; 
+    var lastDeletedType = null; // 'row' or 'column'
 
-    // PART 1 - Create Table Header
-    const headers = ["Student Name", "Student ID", "Assignment 1", "Assignment 2", "Assignment 3", "Assignment 4", "Assignment 5", "Average[%]"];
-    const headerRow = thead.insertRow();
 
-    headers.forEach((headerText) => {
-        const th = document.createElement('th');
-        th.textContent = headerText;
-        th.className = 'text-center';
-        headerRow.appendChild(th);
-    });
-    bindColumnSelectListeners();
+    // PART 1 - Initialize the Table
+    function createInitialTable(){
+        // Make Table Empty
+        thead.innerHTML = '';
+        tbody.innerHTML = '';
 
-    // PART 2 - Create Table Body
-    for (let i = 0; i < 10; i++) {
-        const row = tbody.insertRow();        
+        // Initialize Table Header
+        const newHeaderRow = thead.insertRow();
+        headers.forEach((headerText) => {
+            const th = document.createElement('th');
+            th.textContent = headerText;
+            th.className = 'text-center';
+
+            // [Click Event Listener] -> Assignment X
+            if (headerText.startsWith('Assignment')) {
+                th.style.cursor = 'pointer';
+            }
+            
+            newHeaderRow.appendChild(th);
+        });
         
-        // Use Faker.js to random generate Student Name
-        const name = `${faker.name.firstName()} ${faker.name.lastName()}`;
-        // Random generate Student ID - 8 digits
-        const id = `${Math.floor(10000000 + Math.random() * 90000000)}`; 
+        // Initialize Table Body
+        for (let i = 0; i < 10; i++) {
+            const row = tbody.insertRow();        
+            
+            // Use Faker.js to random generate Student Name
+            const name = `${faker.name.firstName()} ${faker.name.lastName()}`;
+            // Random generate Student ID - 8 digits
+            const id = `${Math.floor(10000000 + Math.random() * 90000000)}`; 
 
-        // Fill Student Name 
-        const nameCell = row.insertCell();
-        nameCell.textContent = name;
-        nameCell.className = 'text-left'; 
+            // Fill Student Name 
+            const nameCell = row.insertCell();
+            nameCell.textContent = name;
+            nameCell.className = 'text-left'; 
+            // [Click Event Listener] -> Student Name
+            nameCell.style.cursor = 'pointer'; 
+            nameCell.addEventListener('click', handleSelectRow);
 
-        // [Click Event Listener] -> Student Name
-        nameCell.style.cursor = 'pointer'; 
-        nameCell.addEventListener('click', handleSelectRow);
+            // Fill Student ID
+            const idCell = row.insertCell();
+            idCell.textContent = id;
+            idCell.className = 'text-left';
 
-        // Fill Student ID
-        const idCell = row.insertCell();
-        idCell.textContent = id;
-        idCell.className = 'text-left';
+            // Fill '-' as Default Value of Assignment X 
+            for (let j = 0; j < 5; j++) { 
+                const cell = row.insertCell();
+                cell.textContent = "-"; 
+                cell.setAttribute('contenteditable', 'true'); 
+                validateAndStyleCell(cell); // Validate and style each cell
+            }
 
-        // Fill '-' as Default Value of Assignment X 
-        for (let j = 0; j < 5; j++) { 
-            const cell = row.insertCell();
-            cell.textContent = "-"; 
-            cell.setAttribute('contenteditable', 'true'); 
-            validateAndStyleCell(cell); // Validate and style each cell
+            // Fill '/' as Default Value of Average
+            const avgCell = row.insertCell(); 
+            avgCell.textContent = "/"; 
+            avgCell.className = 'text-right'; 
         }
 
-        // Fill '-' as Default Value of Average
-        const avgCell = row.insertCell(); 
-        avgCell.textContent = "-"; 
-        avgCell.className = 'text-right'; 
+        // [Click Event Listener] -> Average Header
+        const averageHeader = newHeaderRow.querySelector('th:last-child'); 
+        averageHeader.style.cursor = 'pointer';
+        averageHeader.addEventListener('click', () => toggleAverageFormat(averageGradeFormat));
     }
+    // Initialize the Table when Page loads
+    createInitialTable();
+    bindColumnSelectListeners();
+ 
 
-    // PART 3 - Function: Validate Assignment cells and set their CSS.
+    // PART 2 - Function: Validate Assignment cells and set their CSS.
     function validateAndStyleCell(cell) {
-        // The parent of a Cell is its Row
         const row = cell.parentElement;
 
         // Initial CSS for default value '-'
@@ -110,54 +131,59 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // PART 4 - Function to Update the average for a row
+
+    // PART 3 - Function to Update the Average for a Row
     function updateAverageForRow(row) {
         let sum = 0;
         let count = 0;
-        const cells = row.querySelectorAll('td');
+
         // Get the Sum and Count of valid homework scores
+        const cells = row.querySelectorAll('td');
         cells.forEach((cell, index) => {
             // Excluding cells of Student Name, Student ID, and Average 
             if (index > 1 && index < cells.length - 1) {
                 const value = cell.textContent.trim();
-                if (value !== '-' && !isNaN(value)) {
+                if (value !== '/' && !isNaN(value)) {
                     sum += parseInt(value);
                     count++;
                 }
             }
         });
 
+        // Update Average Score in the last column
         const avgCell = cells[cells.length - 1];         
         if (count > 0) {
             const avg = Math.round(sum / count);
 
             // Store the original percent grade
             avgCell.setAttribute('data-percent-grade', avg); 
+            avgCell.className = 'text-right';
             
             // Convert Grade Format
             let formattedAvg = avg; // Default 
-            if (gradeFormat === 'Average[Letter]') {
+            if (averageGradeFormat === 'Average[Letter]') {
                 formattedAvg = changeGradeFormat(avg); // Letter Grade
-            } else if (gradeFormat === 'Average[4.0]') {
+            } else if (averageGradeFormat === 'Average[4.0]') {
                 formattedAvg = changeGradeFormat(avg); // 4.0 Scale
             }
             avgCell.textContent = formattedAvg;
 
-            avgCell.className = 'text-right';
             // Check whether Average Score is "Failed"
             avg < 60 ? avgCell.classList.add('average-failed') : avgCell.classList.remove('average-failed');
+        // No Assignment is valid.
         } else {
-            // No Assignment is valid.
-            avgCell.textContent = '-';
+            avgCell.textContent = '/';
             avgCell.removeAttribute('data-percent-grade');
             avgCell.className = 'text-right';
             avgCell.classList.remove('average-failed');
         }
+        updateUnsubmitCount();
     }
 
-    // PART 5 - Function to format grade based on current format setting
+
+    // PART 4 - Function to format grade based on current format setting
     function changeGradeFormat(score) {
-        if (gradeFormat === 'Average[Letter]') {
+        if (averageGradeFormat === 'Average[Letter]') {
             if (score >= 93) return 'A';
             if (score >= 90) return 'A-';
             if (score >= 87) return 'B+';
@@ -170,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (score >= 63) return 'D';
             if (score >= 60) return 'D-';
             return 'F';
-        } else if (gradeFormat === 'Average[4.0]') {
+        } else if (averageGradeFormat === 'Average[4.0]') {
             if (score >= 93) return '4.0';
             if (score >= 90) return '3.7';
             if (score >= 87) return '3.3';
@@ -188,16 +214,16 @@ document.addEventListener('DOMContentLoaded', function() {
         return score.toString();
     }
 
-    // PART 6 - Toggle Grade Format when clicking 'Average' header
-    const averageHeader = headerRow.querySelector('th:last-child'); // Assuming the last header is for averages
-    averageHeader.style.cursor = 'pointer'; 
-    averageHeader.addEventListener('click', () => switchGradeFormat(gradeFormat));
-    
-    function switchGradeFormat(currentFormat) {
-        // Switch grade format based on currentFormat
+
+    // PART 5 - Toggle Average Format when clicking 'Average' header
+    function toggleAverageFormat(currentFormat) {
+        // Get the element of THead - Average
+        const averageHeader = document.querySelector('table thead tr th:last-child');
         let newFormat;
         let newText;
-        // Switch grade format
+
+        // Toggle Average format based on currentFormat
+        // Percentage Grade -> Letter Grade -> 4.0 Scale -> Percentage Grade.....
         switch (currentFormat) {
             case 'Average[%]':
                 newFormat = 'Average[Letter]';
@@ -213,8 +239,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
         }
 
-        // Update global variable
-        gradeFormat = newFormat;
+        // Update global variable - gradeFromat
+        averageGradeFormat = newFormat;
         averageHeader.textContent = newText;
 
         // Update all rows' average cell display
@@ -223,12 +249,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const avgCell = row.cells[row.cells.length - 1];
             const percentGrade = avgCell.getAttribute('data-percent-grade');
             if (percentGrade) {
-                avgCell.textContent = gradeFormat === 'Average[%]' ? percentGrade : changeGradeFormat(parseInt(percentGrade));
+                avgCell.textContent = averageGradeFormat === 'Average[%]' ? percentGrade : changeGradeFormat(parseInt(percentGrade));
             }
         });
     }
+
         
-    // PART 7 - Click Student Name -> Select A Row
+    // PART 6 - Click Student Name -> Select A Row
     function handleSelectRow(event){
         const td = event.target;
         const row = td.parentNode; // 获取点击的单元格所在的行
@@ -244,34 +271,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // PART 8 - Click Assignment Title -> Select A Column
-    function handleSelectColumn(event) {
-        const th = event.target;
-        const columnIndex = Array.from(thead.querySelectorAll('th')).indexOf(th); // 获取点击的列索引
 
-        // Click Again to disselect the Column
-        if (th.classList.contains('selected-column')) {
-            clearSelection(); 
-        } else { 
-            // Remove previous selection
-            clearSelection(); 
-            // Selected Assignment on Table Head
-            th.classList.add('selected-column', 'selected-column-top');
-            // Selected Assignment on Table Body
-            const rows = tbody.querySelectorAll('tr');
-            rows.forEach((row, rowIndex) => {
-                const cell = row.cells[columnIndex];
-                if (cell) {
-                    cell.classList.add('selected-column');
-                    if (rowIndex === rows.length - 1) {
-                        cell.classList.add('selected-column-bottom');
-                    }
+    // PART 7 - Click Assignment Title -> Select A Column
+    function handleSelectColumn(columnIndex) {
+        // Clear any previous selection first
+        clearSelection(); 
+
+        // Select the header in the Table Head
+        const currentHeader = thead.querySelectorAll('th')[columnIndex];
+        currentHeader.classList.add('selected-column', 'selected-column-top');
+
+        // Select corresponding cells in the Table Body
+        const rows = tbody.querySelectorAll('tr');
+        rows.forEach((row, rowIndex) => {
+            const cell = row.cells[columnIndex];
+            if (cell) {
+                cell.classList.add('selected-column');
+                if (rowIndex === rows.length - 1) { // Last row's cell gets an additional class
+                    cell.classList.add('selected-column-bottom');
                 }
-            });                    
-        }
+            }
+        });                               
     }
 
-    // PART 9 - Clear all selected Rows/Columns
+
+    // PART 8 - Clear all selected Rows/Columns
     function clearSelection() {
         document.querySelectorAll('.selected-row, .selected-column, .selected-column-top, .selected-column-bottom')
         .forEach(el => {
@@ -279,44 +303,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // PART 10 - Delete selected Row
-    document.getElementById('deleteRowBtn').addEventListener('click', deleteSelectedRow);
 
+    // PART 9 - Delete selected Row
+    document.getElementById('deleteRowBtn').addEventListener('click', deleteSelectedRow);
     function deleteSelectedRow(){
         // Find all selected rows
         const selectedRows = tbody.querySelectorAll('.selected-row');
-
-        if (selectedRows.length === 0) {
+        if (selectedRows.length === 0) { // No Row Selected
             alert('Please select a Student to delete.');
-            return;
+            return; 
         }
 
+        // Remember the Selected Row!
         const row = selectedRows[0];
-        // Remember the Deleted Row!
         deletedRow = {element: row.cloneNode(true), index: Array.from(tbody.rows).indexOf(row)};
-        row.parentNode.removeChild(row);
 
+        // Delete the Row
+        row.parentNode.removeChild(row);
+        
+        updateUnsubmitCount();
         document.getElementById('undeleteBtn').disabled = false;
+        lastDeletedType = 'row';
     }
     
 
-    // PART 11 -  Delete selected Column
-    document.getElementById('deleteColumnBtn').addEventListener('click', deleteSelectedColumn);    
-
+    // PART 10 -  Delete selected Column
+    document.getElementById('deleteColumnBtn').addEventListener('click', deleteSelectedColumn);  
     function deleteSelectedColumn() {
         // Find the selected Column 
         const selectedTh = thead.querySelector('.selected-column');
-        if (!selectedTh) {
+        if (!selectedTh) { // No Column Selected
             alert('Please select a column to delete.');
             return;
         }
+
         const columnIndex = Array.from(thead.querySelectorAll('th')).indexOf(selectedTh);
 
-        // 在删除之前保存
+        // Remember the Selected Column!
         deletedColumn.index = columnIndex;
         deletedColumn.header = selectedTh.textContent;
-        deletedColumn.classes = selectedTh.className; // 保存<th>元素的类
-        
+        deletedColumn.classes = selectedTh.className;         
         tbody.querySelectorAll('tr').forEach(row => {
             if (row.cells[columnIndex]) {
                 deletedColumn.cells.push(row.cells[columnIndex].cloneNode(true));
@@ -332,14 +358,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update Average Score
         tbody.querySelectorAll('tr').forEach(row => updateAverageForRow(row));
 
+        updateUnsubmitCount();
         bindColumnSelectListeners();
         document.getElementById('undeleteBtn').disabled = false;
+        lastDeletedType = 'column';
     }
 
 
-    // PART 12 - Button : Add Column Assignment X+1
+    // PART 11 - Button : Add Column Assignment X+1
     document.getElementById('addAssignmentBtn').addEventListener('click', addAssignmentColumn);
-
     function addAssignmentColumn() {
         // Find 'Average' Table Head
         const headerCells = Array.from(thead.querySelectorAll('th'));
@@ -363,7 +390,6 @@ document.addEventListener('DOMContentLoaded', function() {
         newAssignmentHeader.textContent = `Assignment ${newAssignmentIndex}`;
         newAssignmentHeader.className = 'text-center';
         newAssignmentHeader.style.cursor = 'pointer';
-        newAssignmentHeader.addEventListener('click', handleSelectColumn);
 
         // Add `Assignment x+1` to the left of `Average` Column
         thead.rows[0].insertBefore(newAssignmentHeader, thead.rows[0].cells[averageIndex]);
@@ -378,35 +404,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         bindColumnSelectListeners();
+        updateUnsubmitCount();
     }
 
 
-    // PART 13 -  Bind Listeners when column changes
-    function bindColumnSelectListeners() {
-        thead.querySelectorAll('th').forEach((th, index) => {
-            // Remove previous EventListener of 'Click'
-            th.removeEventListener('click', handleSelectColumn);
+    // PART 12 - Right Click for Adding Rows
+    document.querySelector('table tbody').addEventListener('contextmenu', handleRightClick);
+    function handleRightClick(event) {
+        // event.target must from 'TD' elements
+        if (event.target && event.target.nodeName === 'TD') { // NodeName must all upperCase
+            event.preventDefault(); // Block Default ContextMenu
 
-            // Add EventListener on all Assignment Table Head
-            if (th.textContent.trim().startsWith("Assignment")) {
-                th.style.cursor = 'pointer'; 
-                th.addEventListener('click', handleSelectColumn); 
-            } else {
-                th.style.cursor = 'default'; 
-            }
-        });
-    }
+            removeContextMenu(); // Remove existing first!
 
-    // PART 14 - Context Menu for Adding Rows
-    document.querySelector('table tbody').addEventListener('contextmenu', function(event) {
-        // 确保事件来源自td元素
-        if (event.target && event.target.nodeName === 'TD') { // NodeName 必须是大写的标签名
-            event.preventDefault(); // 阻止默认的右键菜单
-
-            // 首先移除已存在的contextMenu
-            removeContextMenu();
-
-            // 创建自定义的上下文菜单
+            // Set CSS for context Menu
             const contextMenu = document.createElement('div');
             contextMenu.id = 'customContextMenu';
             contextMenu.style.position = 'fixed';
@@ -415,38 +426,39 @@ document.addEventListener('DOMContentLoaded', function() {
             contextMenu.style.backgroundColor = 'white';
             contextMenu.style.border = '1px solid #ccc';
             contextMenu.style.padding = '5px';
-            contextMenu.style.zIndex = '1000'; // 确保菜单在最上层
+            contextMenu.style.zIndex = '1000'; 
 
-            // 添加菜单项
+            // ASdd Menu Options
             const insertAbove = document.createElement('div');
             insertAbove.textContent = 'Insert a row above';
             insertAbove.style.cursor = 'pointer';
+            // Insert new Row above current Row
             insertAbove.addEventListener('click', function() {
-                // 在当前行上方插入新行
                 const newRow = event.target.parentNode.parentNode.insertRow(event.target.parentNode.sectionRowIndex);
                 createRowCells(newRow, event.target.parentNode.cells.length);
-                document.body.removeChild(contextMenu); // 移除上下文菜单
+                document.body.removeChild(contextMenu); 
             });
 
             const insertBelow = document.createElement('div');
             insertBelow.textContent = 'Insert a row below';
             insertBelow.style.cursor = 'pointer';
+            // Insert new Row below current Row
             insertBelow.addEventListener('click', function() {
-                // 在当前行下方插入新行
                 const newRow = event.target.parentNode.parentNode.insertRow(event.target.parentNode.sectionRowIndex + 1);
                 createRowCells(newRow, event.target.parentNode.cells.length);
-                document.body.removeChild(contextMenu); // 移除上下文菜单
+                document.body.removeChild(contextMenu); 
             });
 
             contextMenu.appendChild(insertAbove);
             contextMenu.appendChild(insertBelow);
 
-            // 在页面上添加自定义上下文菜单
-            document.body.appendChild(contextMenu);
-        }
-    });
+            // Add contextMenu in the Webpage
+            document.body.appendChild(contextMenu);   
+        } 
+    }
 
-    // Part 15 - Fill the Cells into created Row
+
+    // Part 13 - Function : Add data in the created Student Row
     function createRowCells(row, cellCount) {
         for (let i = 0; i < cellCount; i++) {
             const cell = row.insertCell(i);
@@ -472,55 +484,81 @@ document.addEventListener('DOMContentLoaded', function() {
                 validateAndStyleCell(cell);
             // Average
             }  else { 
-                cell.textContent = "-";
+                cell.textContent = "/";
                 cell.className = 'text-right';
             }
         }
     }
 
-    // Part 16 - Remove Context Menu
-    document.addEventListener('click', removeContextMenu);
 
+    // Part 14 - Remove Context Menu - By Clicking Anywhere
+    document.addEventListener('click', removeContextMenu);
     function removeContextMenu(){
         const existingMenu = document.getElementById('customContextMenu');
         if (existingMenu) {
             document.body.removeChild(existingMenu);
         }
+        updateUnsubmitCount();
     }
 
-    // Part 17 - Button : Add Row at the buttom of Table
-    document.getElementById('addStudentBtn').addEventListener('click', addStudentRow);
 
+    // Part 15 - Button : Add Row at the buttom of Table
+    document.getElementById('addStudentBtn').addEventListener('click', addStudentRow);
     function addStudentRow() {
+        // Insert Row at the buttom of the Table
         const rowCount = document.querySelector('table tbody').rows.length;
         const newRow = tbody.insertRow(rowCount);
-        const cellCount = document.querySelector('table thead tr').cells.length;
 
+        const cellCount = document.querySelector('table thead tr').cells.length;
         createRowCells(newRow, cellCount);
+
+        updateUnsubmitCount();
     }
 
-    // Part 18 - Undelete Functionality
+
+    // Part 16 - Undelete/Retrieve - bind Listeners to Assginment again.
+    function bindColumnSelectListeners() {
+        const headers = thead.querySelectorAll('th');
+        headers.forEach((header, index) => {
+            if (header.textContent.trim().startsWith("Assignment")) {
+                header.style.cursor = 'pointer';
+                // Update the Click Event Listener on its Index
+                header.onclick = () => handleSelectColumn(index);
+            }
+        });
+    }
+
+
+    // Part 17 - Undelete Functionality
     document.getElementById('undeleteBtn').addEventListener('click', function() {
-        // Case 1: Recover the Row
-        if (deletedRow) {
+        // [Case 1] - Recover the Row
+        if (lastDeletedType === 'row' && deletedRow) {
             const refRow = tbody.rows[deletedRow.index] || tbody.appendChild(document.createElement('tr'));
             tbody.insertBefore(deletedRow.element, refRow);
 
-            // 为“Student Name”单元格重新绑定点击事件监听器
+            // Add Listener to Student Name in Row
             const nameCell = deletedRow.element.cells[0];
             nameCell.style.cursor = 'pointer'; 
             nameCell.addEventListener('click', handleSelectRow);
 
-            // 为assignment单元格重新绑定验证和样式调整逻辑
+            // Change CSS FOR Assginment Cell
             for (let i = 2; i < deletedRow.element.cells.length - 1; i++) {
                 validateAndStyleCell(deletedRow.element.cells[i]);
             }
 
-            deletedRow = null; // 清除存储的被删除行，防止重复恢复
+            deletedRow = null;
+            lastDeletedType = null;  // Clear after undelete
         }
 
-        // Case 2: Recover the Column
-        if (deletedColumn.index !== null) {
+        // [Case 2] - Recover the Column
+        if (lastDeletedType === 'column' && deletedColumn.index !== null) {
+            // Recover THead of the Column
+            const headerCell = document.createElement('th');
+            headerCell.textContent = deletedColumn.header;
+            headerCell.className = deletedColumn.classes; 
+            headerCell.style.cursor = 'pointer';
+            thead.rows[0].insertBefore(headerCell, thead.rows[0].cells[deletedColumn.index]);
+
             // Recover TBody of the Column
             Array.from(tbody.rows).forEach((row, i) => {
                 const refCell = row.cells[deletedColumn.index] || row.appendChild(document.createElement('td'));
@@ -528,23 +566,135 @@ document.addEventListener('DOMContentLoaded', function() {
                 validateAndStyleCell(deletedColumn.cells[i]); // CSS and JS of that cell
             });
 
-            // Recover THead of the Column
-            const headerCell = document.createElement('th');
-            headerCell.textContent = deletedColumn.header;
-            headerCell.className = deletedColumn.classes; // 重新应用保存的类
-            headerCell.addEventListener('click', handleSelectColumn); // 重新绑定点击事件监听器
-            headerCell.style.cursor = 'pointer';
-            thead.rows[0].insertBefore(headerCell, thead.rows[0].cells[deletedColumn.index]);
-
             // Update the Average Score after Undelete!
             Array.from(tbody.rows).forEach(row => {
                 updateAverageForRow(row);
             });
 
-            deletedColumn = {index: null, cells: []}; // 清除存储的被删除列，防止重复恢复
+            deletedColumn = {index: null, cells: []}; //  Clear after undelete
+            lastDeletedType = null; // Reset lastDeletedType
+            bindColumnSelectListeners();
         }
+
+        updateUnsubmitCount();
 
         // "Disable Undelete" Button after Clicked
         document.getElementById('undeleteBtn').disabled = true;
     });
+
+
+    // PART 18 - Save Table State
+    document.getElementById('saveBtn').addEventListener('click', function() {
+        const tableData = {
+            headers: [], 
+            rows: [],
+            averageGradeFormat: averageGradeFormat
+        };
+
+        // Save all data in Table Header
+        const headerCells = thead.querySelectorAll('th');
+        headerCells.forEach(header => {
+            const headerData = {
+                text: header.textContent,
+                className: header.className
+            };
+            tableData.headers.push(headerData);
+        });
+
+        // Save all data in Table Body
+        tbody.querySelectorAll('tr').forEach(row => {
+            const rowData = [];
+            row.querySelectorAll('td').forEach(cell => {
+                const cellData = {
+                    html: cell.innerHTML, 
+                    class: cell.className 
+                };
+                rowData.push(cellData); 
+            });
+            tableData.rows.push(rowData);
+        });
+
+        // Save Table information into Windows localStorage
+        localStorage.setItem('tableData', JSON.stringify(tableData));
+        console.log(localStorage.getItem('tableData'));
+    });
+
+
+    // PART 19 - Retrieve Table State
+    document.getElementById('retrieveBtn').addEventListener('click', function() {
+        // Retrieve Table information from Windows localStorage
+        const tableDataStr = localStorage.getItem('tableData');
+        if (tableDataStr) {
+            const tableData = JSON.parse(tableDataStr);
+
+            // Clear all table information first
+            thead.innerHTML = '';
+            tbody.innerHTML = '';
+
+            // Retrieve Table Head
+            if (tableData.headers && tableData.headers.length > 0) {
+                const headerRow = thead.insertRow();
+                tableData.headers.forEach(headerData => {
+                    const th = document.createElement('th');
+                    th.textContent = headerData.text; 
+                    th.className = headerData.className; 
+                    headerRow.appendChild(th);
+                });
+            }
+
+            // Retrieve Table Body
+            tableData.rows.forEach(rowData => {
+                const row = tbody.insertRow();
+                rowData.forEach((cellData, index) => {
+                    const cell = row.insertCell();
+                    cell.innerHTML = cellData.html;
+                    cell.className = cellData.class; 
+                    // Retrieve Student Name
+                    if (index === 0) { 
+                        cell.addEventListener('click', handleSelectRow);
+                        cell.style.cursor = 'pointer';
+                    // Retrieve Assignment Information
+                    } else {
+                        // Excluding Student Name, Student ID and Average Score
+                        if (!cellData.class.includes('text-left') && index < rowData.length - 1) { 
+                            cell.setAttribute('contenteditable', 'true');
+                            validateAndStyleCell(cell);
+                        }
+                    }
+                });
+                updateAverageForRow(row); // Update Average Score for every row
+            });
+
+            // Restore Average Format and its Listener
+            averageGradeFormat = tableData.averageGradeFormat;
+            const averageHeader = thead.querySelector('th:last-child'); 
+            averageHeader.style.cursor = 'pointer'; 
+            averageHeader.addEventListener('click', () => toggleAverageFormat(averageGradeFormat));
+            averageHeader.textContent = averageGradeFormat;
+
+            bindColumnSelectListeners();
+            updateUnsubmitCount();
+        }
+    });
+
+    // PART 20 - Update the Number of Unsubmitted Assignment
+    function updateUnsubmitCount() {
+        const cells = tbody.querySelectorAll('td'); 
+        let unsubmittedCount = 0; 
+    
+        // Traverse all <td>, find whose value is "-"
+        cells.forEach(cell => {
+            if (cell.textContent.trim() === "-") {
+                unsubmittedCount++; 
+            }
+        });
+    
+        // Update the Count for Unsubmitted Assignments
+        const unsubmittedAssignmentsElement = document.getElementById('CANum');
+        unsubmittedAssignmentsElement.textContent = unsubmittedCount;
+    }
+    updateUnsubmitCount();
+
+    // PART 21 - Initialize the Table
+    document.getElementById('initialBtn').addEventListener('click', createInitialTable);
 });

@@ -87,3 +87,7 @@ tr:nth-child(odd) {
 .button-container button {
     margin: 0 10px; 
 }
+
+span{
+    color:red;
+}
