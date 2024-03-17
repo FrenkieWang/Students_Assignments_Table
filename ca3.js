@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var averageGradeFormat = 'Average[%]'; // Default to Percent Grade
     const headers = ["Student Name", "Student ID", "Assignment 1", "Assignment 2", 
     "Assignment 3", "Assignment 4", "Assignment 5", averageGradeFormat];
+    const initialStudents = []; // Save the Name and ID of the initial 10 Students
 
     //  Store recently deleted rows and columns
     var deletedRow = null;
@@ -36,16 +37,19 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Initialize Table Body
         for (let i = 0; i < 10; i++) {
+            // Use Faker.js to generate Student Name and ID only if they don't exist
+            if (initialStudents.length < 10) {
+                const name = `${faker.name.firstName()} ${faker.name.lastName()}`;
+                const id = `${Math.floor(10000000 + Math.random() * 90000000)}`;
+                initialStudents.push({ name, id });
+            }
+
             const row = tbody.insertRow();        
-            
-            // Use Faker.js to random generate Student Name
-            const name = `${faker.name.firstName()} ${faker.name.lastName()}`;
-            // Random generate Student ID - 8 digits
-            const id = `${Math.floor(10000000 + Math.random() * 90000000)}`; 
+            const student = initialStudents[i];
 
             // Fill Student Name 
             const nameCell = row.insertCell();
-            nameCell.textContent = name;
+            nameCell.textContent = student.name;
             nameCell.className = 'text-left'; 
             // [Click Event Listener] -> Student Name
             nameCell.style.cursor = 'pointer'; 
@@ -53,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Fill Student ID
             const idCell = row.insertCell();
-            idCell.textContent = id;
+            idCell.textContent = student.id;
             idCell.className = 'text-left';
 
             // Fill '-' as Default Value of Assignment X 
