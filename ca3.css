@@ -1,0 +1,92 @@
+.App {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+}
+
+table {
+    border-collapse: collapse; 
+    font-family: sans-serif; /* All	data presentation in table */
+}
+
+th, td {
+    border: 1px solid black; 
+    padding: 10px; 
+}
+
+th {
+    background-color: darkgray   ; 
+}
+  
+tr:nth-child(even) {
+    background-color: whitesmoke; 
+}
+
+tr:nth-child(odd) {
+    background-color: gainsboro ; 
+}
+
+/* 对齐样式 */
+.text-left {
+    text-align: left; 
+}
+
+.text-center {
+    text-align: center; 
+}
+
+.text-right {
+    text-align: right; 
+}
+
+
+.selected-row, .selected-column {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.selected-row{
+    border: 5px solid aqua;
+}
+
+.selected-column {
+    border-left: 5px solid orangered;
+    border-right: 5px solid orangered;
+}
+
+.selected-column-top {
+    border-top: 5px solid orangered;
+}
+
+.selected-column-bottom {
+    border-bottom: 5px solid orangered;
+}
+
+.average-failed {
+    background-color: red;
+    color: white;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+
+    /* Make element fixed in the brower window */
+    position: fixed; 
+    /* At the buttom, same as browser window lenght */
+    bottom: 0; 
+    left: 0; 
+    width: 100%; 
+
+    background-color: whitesmoke; 
+}
+
+.button-container button {
+    margin: 0 10px; 
+}
+
+span{
+    color:red;
+}

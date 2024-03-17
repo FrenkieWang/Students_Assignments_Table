@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabular Content</title>
+    <link rel="stylesheet" href="./ca3.css">
+    <!-- Install Faker.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
+    <script defer src="./ca3.js"></script>
+</head>
+<body>
+    <div class="App">
+        <h2>Student Transcript</h2> 
+        <table>
+            <thead></thead> 
+            <tbody></tbody> 
+        </table>
+        <div class="button-container">
+            <button id="deleteColumnBtn">Delete Selected Column</button>
+            <button id="deleteRowBtn">Delete Selected Row</button>
+            <button id="addStudentBtn">Add Student Row</button>
+            <button id="addAssignmentBtn">Add Assignment Column</button>
+            <button id="undeleteBtn">Undelete</button>
+            <button id="saveBtn">Save</button>
+            <button id="retrieveBtn">Retrieve</button>
+            <button id="initialBtn">Initialize</button>
+        </div>
+        <h3>Unsubmitted Assignment: <span id = "CANum">0</span></h3>
+    </div>
+</body>
+</html>
