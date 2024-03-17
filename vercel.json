@@ -1,15 +1,9 @@
 {
-    "version" : 2,
-    "builds" : [
+    "version": 2,
+    "routes": [
         {
-            "src" : "ca3.html",
-            "use" : "@vercel/node"
-        }
-    ],
-    "routes" : [
-        {
-            "src" : "/(.*)",
-            "dest" : "ca3.html"
+            "src": "/(.*)",
+            "dest": "/ca3.html"
         }
     ]
 }
