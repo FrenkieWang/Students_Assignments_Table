@@ -67,6 +67,14 @@ tr:nth-child(odd) {
     color: white;
 }
 
+button {
+    margin: 5px 10px; /* 在按钮周围增加空隙 */
+    padding: 10px 20px; /* 增加按钮内部的空间，使按钮更大 */
+    font-size: 16px; /* 增加文字大小 */
+    border-radius: 5px; /* 圆角边框 */
+    cursor: pointer; /* 鼠标悬停时显示指针，提高用户体验 */
+}
+
 span{
     color:red;
 }
