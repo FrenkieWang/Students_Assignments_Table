@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     "Assignment 3", "Assignment 4", "Assignment 5", averageGradeFormat];
     const initialStudents = []; // Save the Name and ID of the initial 10 Students
 
-    //  Store recently deleted rows and columns
+    //  Save recently deleted rows and columns
     var deletedRow = null;
     var deletedColumn = {index: null, cells: []}; 
     var lastDeletedType = null; // 'row' or 'column'
@@ -42,10 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const name = `${faker.name.firstName()} ${faker.name.lastName()}`;
                 const id = `${Math.floor(10000000 + Math.random() * 90000000)}`;
                 initialStudents.push({ name, id });
-            }
-
-            const row = tbody.insertRow();        
+            }      
             const student = initialStudents[i];
+
+            const row = tbody.insertRow();   
 
             // Fill Student Name 
             const nameCell = row.insertCell();
@@ -520,7 +520,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    // Part 16 - Undelete/Retrieve - bind Listeners to Assginment again.
+    // Part 16 - Undelete/Retrieve - Bind Listeners to Assginment Column again.
     function bindColumnSelectListeners() {
         const headers = thead.querySelectorAll('th');
         headers.forEach((header, index) => {
@@ -533,7 +533,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    // Part 17 - Undelete Functionality
+    // Part 17 - Undelete Row / Column
     document.getElementById('undeleteBtn').addEventListener('click', function() {
         // [Case 1] - Recover the Row
         if (lastDeletedType === 'row' && deletedRow) {
